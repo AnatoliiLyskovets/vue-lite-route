@@ -1,6 +1,16 @@
 # Changelog
 
-## 1.0.1
+## 1.1.0 - 2022-11-10
+
+### Changed
+
+- Remove the path normalization in routes and modifiers (no force `/` at the beginning of routes)
+
+### Fixed
+
+- Fix the problem with the incorrect children group registration (path overwrite)
+
+## 1.0.1 - 2022-11-10
 
 ### Fixed
 

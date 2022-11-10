@@ -7,15 +7,6 @@ describe('PreparedRouteRecord utility class', () => {
     it('should throw error on missing action', () => {
         expect(() => new PreparedRouteRecord({ path: '/error', action: {} })).toThrow('action should be registered');
     });
-    it('should normalize the path', () => {
-        const preparedRecord = new PreparedRouteRecord(
-            {
-                path: 'foo',
-                action: { component: defineComponent({}) }
-            }
-        );
-        expect(preparedRecord.toRawRoute().path).toBe('/foo');
-    });
     it('should process the modifier', () => {
         const testMiddleware: MiddlewareFunction = async () => {
             return true;

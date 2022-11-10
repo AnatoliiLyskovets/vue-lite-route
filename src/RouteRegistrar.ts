@@ -84,8 +84,6 @@ export class RouteRegistrar {
         modifier: Modifier,
         overwriteFields: string[] = []
     ) {
-        if (modifier.prefix && modifier.prefix[0] !== '/')
-            modifier.prefix = '/' + modifier.prefix;
         if (modifier.middleware && !Array.isArray(modifier.middleware))
             modifier.middleware = [modifier.middleware];
         if (this._modifiers.length === 0) {
@@ -100,13 +98,13 @@ export class RouteRegistrar {
             return this;
         }
         const lastState = { ...(this._resultModifierStates[this._resultModifierStates.length - 1]) } as Required<NormalizedModifier>;
-        if (modifier.prefix) {
+        if (modifier.prefix !== undefined) {
             if (overwriteFields.includes('prefix'))
                 lastState.prefix = modifier.prefix;
             else
                 lastState.prefix += modifier.prefix;
         }
-        if (modifier.name) {
+        if (modifier.name !== undefined) {
             if (overwriteFields.includes('name'))
                 lastState.name = modifier.name;
             else

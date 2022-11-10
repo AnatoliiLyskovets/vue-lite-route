@@ -38,8 +38,6 @@ export class PreparedRouteRecord {
     }
 
     path(path: string) {
-        if (path && path[0] !== '/')
-            path = '/' + path;
         if (this._attachedModifier)
             this._path = this._attachedModifier.prefix ? this._attachedModifier.prefix + path : path;
         else

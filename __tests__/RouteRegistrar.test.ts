@@ -26,7 +26,7 @@ describe('RouteRegistrar', () => {
         const testMiddleware: MiddlewareFunction = async () => {
             return true;
         };
-        Route.group({ prefix: 'test/prefix', name: 'test.prefix', middleware: [testMiddleware] }, () => {
+        Route.group({ prefix: '/test/prefix', name: 'test.prefix', middleware: [testMiddleware] }, () => {
             Route.add('/bar', { component: defineComponent({}) }).name('.bar');
             Route.add('/foo/some', { component: defineComponent({}) }).middleware(testMiddleware).name('.foo.some');
         });
@@ -38,7 +38,7 @@ describe('RouteRegistrar', () => {
         expect(routes[1].name).toBe('test.prefix.foo.some');
         expect((routes[1].meta?.middleware as []).length).toBe(2);
     });
-    it('should register groups with children ', () => {
+    it('should register groups with children', () => {
         Route.childrenGroup('/test-children', { action: { component: defineComponent({}) } }, () => {
             Route.add('/foo', { component: defineComponent({}) }).name('child.foo');
         });
