@@ -1,6 +1,6 @@
 {
   "name": "vue-lite-route",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/vue-lite-route.js",
   "module": "dist/vue-lite-route.mjs",
   "types": "dist/vue-lite-route.d.ts",
@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/AnatoliiLyskovets/vue-lite-route/issues"
   },
-  "homepage": "https://github.com/AnatoliiLyskovets/vue-lite-route/issues#readme",
+  "homepage": "https://github.com/AnatoliiLyskovets/vue-lite-route#readme",
   "peerDependencies": {
     "vue-router": "^4.0.0"
   },

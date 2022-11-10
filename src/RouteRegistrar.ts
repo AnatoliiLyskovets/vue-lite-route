@@ -99,7 +99,7 @@ export class RouteRegistrar {
             this._resultModifierStates.push(modifier as Required<NormalizedModifier>);
             return this;
         }
-        const lastState = (structuredClone(this._resultModifierStates[this._resultModifierStates.length - 1]) as Required<NormalizedModifier>);
+        const lastState = { ...(this._resultModifierStates[this._resultModifierStates.length - 1]) } as Required<NormalizedModifier>;
         if (modifier.prefix) {
             if (overwriteFields.includes('prefix'))
                 lastState.prefix = modifier.prefix;
