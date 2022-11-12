@@ -83,7 +83,7 @@ export const routes = [
 import { Route } from 'vue-lite-route';
 //... your Vue component imports
 
-Route.group({ prefix: 'path/prefix', name: 'name.prefix' }, () => {
+Route.group({ prefix: '/path/prefix', name: 'name.prefix' }, () => {
     Route.add('/profile', { component: ProfilePage }).name('.profile');
     Route.add(
         '/other/section',
@@ -93,7 +93,7 @@ Route.group({ prefix: 'path/prefix', name: 'name.prefix' }, () => {
             FooterSection    
         }}
     ).name('.other.section');
-    Route.group({ prefix: 'another/prefix', name: '.another.prefix' }, () => {
+    Route.group({ prefix: '/another/prefix', name: '.another.prefix' }, () => {
         Route.add('/deep', { redirect: { name: 'name.prefix.profile' } }).name('.deep');
     })
 });
@@ -133,7 +133,7 @@ import { Route } from 'vue-lite-route';
 //... your Vue component imports
 
 Route.childrenGroup('/parent', { action: { component: ParentComponent }, name: 'parent' }, () => {
-    Route.add('/nested-child', { component: NestedPage }).name('nestedPage');
+    Route.add('nested-child', { component: NestedPage }).name('nestedPage');
 });
 
 export const routes = Route.buildRoutes();
@@ -146,7 +146,7 @@ export const routes = [
         name: 'parent',
         children: [
             {
-                path: '/nested-child',
+                path: 'nested-child',
                 component: NestedPage,
                 name: 'nestedPage'
             }
