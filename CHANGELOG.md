@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 - 2022-11-18
+
+### Added
+
+- Add methods for force overwriting the `PreparedRouteRecord` properties: `forcePath()`, `forceMiddleware()`, `forceName()`, `clearMiddleware()`, `clearName()`
+- Add return of prepared parent route instance from `childrenGroup()` method
+
 ## 1.1.0 - 2022-11-10
 
 ### Changed

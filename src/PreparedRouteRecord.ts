@@ -45,6 +45,11 @@ export class PreparedRouteRecord {
         return this;
     }
 
+    forcePath(path: string) {
+        this._path = path;
+        return this;
+    }
+
     middleware(middleware: RawMiddleware) {
         if (!Array.isArray(middleware))
             middleware = [middleware];
@@ -55,12 +60,32 @@ export class PreparedRouteRecord {
         return this;
     }
 
+    forceMiddleware(middleware: RawMiddleware = []) {
+        if (!Array.isArray(middleware))
+            middleware = [middleware];
+        this._middleware = middleware;
+        return this;
+    }
+
+    clearMiddleware() {
+        this.forceMiddleware();
+    }
+
     name(name: string) {
         if (this._attachedModifier)
             this._name = this._attachedModifier.name ? this._attachedModifier.name + name : name;
         else
             this._name = name;
         return this;
+    }
+
+    forceName(name: string | undefined = undefined) {
+        this._name = name;
+        return this;
+    }
+
+    clearName() {
+        this.forceName();
     }
 
     meta(meta: RouteMeta) {

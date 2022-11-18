@@ -78,6 +78,7 @@ export class RouteRegistrar {
         routesRegistrationClosure();
         this._targets.pop();
         this.dropLastModifier();
+        return newRoute;
     }
 
     protected registerModifier(
