@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1 - 2024-10-15
+
+### Fixed
+
+- Add re-export for all the core contracts
+
 ## 1.3.0 - 2024-10-15
 
 ### Added
