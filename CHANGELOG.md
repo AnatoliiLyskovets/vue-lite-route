@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0 - 2024-10-15
+
+### Added
+
+- Add explicit type for `overwriteFields` in `registerModifier()` to better track changes in `Modifier` properties.
+- Removed `_` prefixes in `RouteRegistrar` for better properties naming and readability.
+
+### Changed
+
+- Bumped main package versions (dev ones)
+- Upgraded ESLint config (new flat config)
+
 ## 1.2.0 - 2022-11-18
 
 ### Added

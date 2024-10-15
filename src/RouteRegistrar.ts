@@ -6,18 +6,20 @@ import { Modifier } from './Contracts/Modifier';
 import { RouteActionChildrenGroup } from './Contracts/RouteActionChildrenGroup';
 import { RawMiddleware } from './Contracts/Middleware/RawMiddleware';
 
+export type OverwriteField = keyof Modifier;
+
 export class RouteRegistrar {
-    protected _routes: PreparedRouteRecord[] = [];
-    protected _modifiers: NormalizedModifier[] = [];
-    protected _resultModifierStates: NormalizedModifier[] = [];
-    protected _targets: PreparedRouteRecord[] = [];
+    protected preparedRoutes: PreparedRouteRecord[] = [];
+    protected modifiers: NormalizedModifier[] = [];
+    protected resultModifierStates: NormalizedModifier[] = [];
+    protected targets: PreparedRouteRecord[] = [];
 
     get routes() {
-        return this._routes;
+        return this.preparedRoutes;
     }
 
     clear() {
-        this._routes = [];
+        this.preparedRoutes = [];
         return this;
     }
 
@@ -25,17 +27,17 @@ export class RouteRegistrar {
         path: string,
         action: RouteAction | RouteActionChildrenGroup,
     ) {
-        const lastState: NormalizedModifier | undefined = this._resultModifierStates[this._resultModifierStates.length - 1];
+        const lastState: NormalizedModifier | undefined = this.resultModifierStates[this.resultModifierStates.length - 1];
 
         const newRouteRecord = new PreparedRouteRecord({
             attachedModifier: lastState,
             path: path,
             action: action
         });
-        if (this._targets.length !== 0) {
-            this._targets[this._targets.length - 1].addChild(newRouteRecord);
+        if (this.targets.length !== 0) {
+            this.targets[this.targets.length - 1].addChild(newRouteRecord);
         } else {
-            this._routes.push(newRouteRecord);
+            this.preparedRoutes.push(newRouteRecord);
         }
         return newRouteRecord;
     }
@@ -74,31 +76,37 @@ export class RouteRegistrar {
         if (meta)
             newRoute.meta(meta);
         this.registerModifier({ prefix: '' }, ['prefix']);
-        this._targets.push(newRoute);
+        this.targets.push(newRoute);
         routesRegistrationClosure();
-        this._targets.pop();
+        this.targets.pop();
         this.dropLastModifier();
         return newRoute;
     }
 
+    protected normalizeInitialModifier(modifier: Modifier) {
+        if (modifier.prefix === undefined)
+            modifier.prefix = '';
+        if (modifier.name === undefined)
+            modifier.name = '';
+        if (modifier.middleware === undefined)
+            modifier.middleware = [];
+        return modifier as Required<NormalizedModifier>;
+    }
+
     protected registerModifier(
         modifier: Modifier,
-        overwriteFields: string[] = []
+        overwriteFields: OverwriteField[] = []
     ) {
-        if (modifier.middleware && !Array.isArray(modifier.middleware))
+        if (modifier.middleware && !Array.isArray(modifier.middleware)) {
             modifier.middleware = [modifier.middleware];
-        if (this._modifiers.length === 0) {
-            if (modifier.prefix === undefined)
-                modifier.prefix = '';
-            if (modifier.name === undefined)
-                modifier.name = '';
-            if (modifier.middleware === undefined)
-                modifier.middleware = [];
-            this._modifiers.push(modifier as Required<NormalizedModifier>);
-            this._resultModifierStates.push(modifier as Required<NormalizedModifier>);
+        }
+        if (this.modifiers.length === 0) {
+            const normalizedModifier = this.normalizeInitialModifier(modifier);
+            this.modifiers.push(normalizedModifier);
+            this.resultModifierStates.push(normalizedModifier);
             return this;
         }
-        const lastState = { ...(this._resultModifierStates[this._resultModifierStates.length - 1]) } as Required<NormalizedModifier>;
+        const lastState = { ...(this.resultModifierStates[this.resultModifierStates.length - 1]) } as Required<NormalizedModifier>;
         if (modifier.prefix !== undefined) {
             if (overwriteFields.includes('prefix'))
                 lastState.prefix = modifier.prefix;
@@ -117,19 +125,19 @@ export class RouteRegistrar {
             else
                 lastState.middleware = lastState.middleware.concat(modifier.middleware);
         }
-        this._modifiers.push(modifier as NormalizedModifier);
-        this._resultModifierStates.push(lastState);
+        this.modifiers.push(modifier as NormalizedModifier);
+        this.resultModifierStates.push(lastState);
         return this;
     }
 
     protected dropLastModifier() {
-        this._modifiers.pop();
-        this._resultModifierStates.pop();
+        this.modifiers.pop();
+        this.resultModifierStates.pop();
         return this;
     }
 
     buildRoutes() {
-        return this.routes.map(route => route.toRawRoute());
+        return this.preparedRoutes.map(route => route.toRawRoute());
     }
 }
 

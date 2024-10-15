@@ -2,10 +2,10 @@ import { createRequire } from 'module';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-import dts from 'rollup-plugin-dts'
+import dts from 'rollup-plugin-dts';
 
 const require = createRequire(import.meta.url);
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const packageJson = require('./package.json');
 
 const globals = {

@@ -379,7 +379,7 @@ This function accepts the Vue router instance and registers the middleware proce
 - [Changelog](CHANGELOG.md)
 
 ## Credits
-The vue-lite-route package is heavily inspired by the [Laravel Router](https://laravel.com/docs/9.x/routing). 
+The vue-lite-route package is heavily inspired by the [Laravel Router](https://laravel.com/docs/11.x/routing). 
 This package is an effort to provide the same easy way for route registration and middleware processing as in Laravel framework.
 
 ## License
